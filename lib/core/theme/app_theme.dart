@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color primaryColor = Color(0xFF6C63FF);
@@ -8,14 +7,14 @@ class AppTheme {
   static const Color surfaceColor = Colors.white;
   static const Color errorColor = Color(0xFFB00020);
 
- static final TextTheme textTheme = GoogleFonts.ibmPlexSansTextTheme().copyWith(
-  bodyLarge: GoogleFonts.ibmPlexSans(
-    fontSize: 15,
-    fontWeight: FontWeight.w500,
-    color: Colors.black,
-  ),
- 
-);
+  static const TextTheme textTheme = TextTheme(
+    bodyLarge: TextStyle(
+      fontFamily: 'Roboto', // Fallback to system font for offline-first
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      color: Colors.black,
+    ),
+  );
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,

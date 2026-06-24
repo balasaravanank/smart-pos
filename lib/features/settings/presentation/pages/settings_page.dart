@@ -49,8 +49,8 @@ class _SettingsPageState extends State<SettingsPage> {
               padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
               child: BlocBuilder<ShopBloc, ShopState>(
                 builder: (context, state) {
-                  String shopName = 'Elite Groceries';
-                  String initials = 'EG';
+                  String shopName = 'My Shop';
+                  String initials = 'MS';
                   if (state is ShopLoaded && state.shop.name.isNotEmpty) {
                     shopName = state.shop.name;
                     final parts = shopName.split(' ');
@@ -107,12 +107,25 @@ class _SettingsPageState extends State<SettingsPage> {
                   subtitle: 'Manage stock and barcodes',
                   onTap: () => context.push('/products'),
                 ),
-                _buildDivider(),
                 _buildListItem(
                   icon: Icons.storefront,
                   title: 'Shop Details',
                   subtitle: 'Edit business info & address',
                   onTap: () => context.push('/shop'),
+                ),
+                _buildDivider(),
+                _buildListItem(
+                  icon: Icons.history,
+                  title: 'Invoice History',
+                  subtitle: 'View past orders & receipts',
+                  onTap: () => context.push('/history'),
+                ),
+                _buildDivider(),
+                _buildListItem(
+                  icon: Icons.cloud_upload,
+                  title: 'Backup & Restore',
+                  subtitle: 'Export data to Google Drive or email',
+                  onTap: () => context.push('/backup'),
                 ),
               ],
             ),

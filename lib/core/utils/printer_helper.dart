@@ -178,7 +178,7 @@ class PrinterHelper {
     // Total (Align Right)
     bytes += EscPos.alignRight;
     bytes += EscPos.boldOn;
-    bytes += _textToBytes('TOTAL: $total');
+    bytes += _textToBytes('TOTAL: ${total.toStringAsFixed(2)}');
     bytes += EscPos.lineFeed;
     bytes += EscPos.boldOff;
     bytes += EscPos.lineFeed;
@@ -191,6 +191,11 @@ class PrinterHelper {
     bytes += EscPos.lineFeed;
     bytes += EscPos.lineFeed; // Additional Feed
 
+    final bool connectionStatus = await PrintBluetoothThermal.connectionStatus;
+    if (!connectionStatus) {
+      _isConnected = false;
+      return;
+    }
     await PrintBluetoothThermal.writeBytes(bytes);
   }
 

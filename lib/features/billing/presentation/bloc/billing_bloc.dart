@@ -5,6 +5,9 @@ import 'package:billing_app/features/product/domain/entities/product.dart';
 import 'package:billing_app/features/product/domain/usecases/product_usecases.dart';
 import '../../../../core/utils/printer_helper.dart';
 import '../../../../core/data/hive_database.dart';
+import 'package:uuid/uuid.dart';
+import '../../domain/entities/invoice.dart';
+import '../../data/repositories/invoice_repository_impl.dart';
 
 part 'billing_event.dart';
 part 'billing_state.dart';
@@ -110,7 +113,7 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
 
     try {
       final items = state.cartItems
-          .map((item) => {
+          .map((item) => <String, dynamic>{
                 'name': item.product.name,
                 'qty': item.quantity,
                 'price': item.product.price,
@@ -126,6 +129,16 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
           items: items,
           total: state.totalAmount,
           footer: event.footer);
+
+      // Save Invoice to History
+      final invoice = Invoice(
+        id: const Uuid().v4(),
+        items: List.from(state.cartItems),
+        totalAmount: state.totalAmount,
+        createdAt: DateTime.now(),
+        shopName: event.shopName,
+      );
+      await InvoiceRepositoryImpl().addInvoice(invoice);
 
       emit(state.copyWith(isPrinting: false, printSuccess: true));
     } catch (e) {
