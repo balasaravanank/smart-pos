@@ -1,4 +1,5 @@
-name: smart_pos
+name: billing_app
+## runtime issue 
 description: Offline-first POS & billing app with barcode scanning and Bluetooth thermal printing.
 publish_to: 'none'
 version: 1.0.0+1
